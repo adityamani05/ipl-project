@@ -1,10 +1,40 @@
-function economicalBowlers(deliveries,matches){
+function economicalBowlerAllSeason(deliveries,matches){
+    var result = {};
+    let economicalBowler2008 = economicalBowlerPerYear(deliveries,matches,2008);
+    let economicalBowler2009 = economicalBowlerPerYear(deliveries,matches,2009);
+    let economicalBowler2010 = economicalBowlerPerYear(deliveries,matches,2010);
+    let economicalBowler2011 = economicalBowlerPerYear(deliveries,matches,2011);
+    let economicalBowler2012 = economicalBowlerPerYear(deliveries,matches,2012);
+    let economicalBowler2013 = economicalBowlerPerYear(deliveries,matches,2013);
+    let economicalBowler2014 = economicalBowlerPerYear(deliveries,matches,2014);
+    let economicalBowler2015 = economicalBowlerPerYear(deliveries,matches,2015);
+    let economicalBowler2016 = economicalBowlerPerYear(deliveries,matches,2016);
+    let economicalBowler2017 = economicalBowlerPerYear(deliveries,matches,2017);
+    let economicalBowler2018 = economicalBowlerPerYear(deliveries,matches,2018);
+    let economicalBowler2019 = economicalBowlerPerYear(deliveries,matches,2019);
+    result["2008"] = economicalBowler2008;
+    result["2009"] = economicalBowler2009;
+    result["2010"] = economicalBowler2010;
+    result["2011"] = economicalBowler2011;
+    result["2012"] = economicalBowler2012;
+    result["2013"] = economicalBowler2013;
+    result["2014"] = economicalBowler2014;
+    result["2015"] = economicalBowler2015;
+    result["2016"] = economicalBowler2016;
+    result["2017"] = economicalBowler2017;
+    result["2018"] = economicalBowler2018;
+    result["2019"] = economicalBowler2019;
+    //console.log(result);
+    return result;
+}
+function economicalBowlerPerYear(deliveries,matches,year)
+{
     var myMap=new Map();
     var myMap1=new Map();
     var arr=[];
     for(let i=0;i<matches.length;i++)
     {
-      if(matches[i].season=="2015")
+      if(matches[i].season==year)
       {
         for(let j=0;j<deliveries.length;j++)
         {
@@ -38,7 +68,7 @@ function economicalBowlers(deliveries,matches){
     }
     for(let i=0;i<matches.length;i++)
     {
-      if(matches[i].season=="2015")
+      if(matches[i].season==year)
       {
         for(let j=0;j<deliveries.length;j++)
         {
@@ -54,7 +84,7 @@ function economicalBowlers(deliveries,matches){
     }
 for(let i=0;i<matches.length;i++)
 {
-  if(matches[i].season=="2015")
+  if(matches[i].season==year)
   {
     for(let j=0;j<deliveries.length;j++)
     {
@@ -119,6 +149,6 @@ var arr1=[];
     }
 //console.log(arr1);
 return arr1;
-}
 
-module.exports = economicalBowlers;
+}
+module.exports = economicalBowlerAllSeason;

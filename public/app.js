@@ -4,7 +4,33 @@ function fetchAndVisualizeData() {
     .then(visualizeData);
 }
 
-
+function start()
+{
+  document.querySelector(".year-input-button")
+  .addEventListener("click",fetchAndRenderEconomyRatesForYear)
+}
+function fetchAndRenderEconomyRatesForYear(e)
+{
+  var t = document.querySelector(".year-input").value;
+  var year = parseInt(t);
+  if(year < 2008 || 2019 < year)
+  {
+    document.querySelector(".input-container > .error").classList.value="error";
+  }
+  else
+  {
+    document.querySelector(".input-container > .error").classList="error invisible";
+    //fetch("./data.json").then(r => r.json())
+    fetch("./data.json")
+    .then(function(e){return e.json()})
+    .then(function(e){document.querySelector("#economical-bowlers-given-year").innerHTML="",
+    //console.log(e);
+    visualizeDataforGivenYear(year,e);
+    })
+  //(t=parseInt(t))<2008||2019<t?document.querySelector(".input-container > .error").classList.value="error":(document.querySelector(".input-container > .error").classList="error invisible",console.log(t))
+}
+}
+start();
 fetchAndVisualizeData();
 
 function visualizeData(data) {
@@ -13,6 +39,12 @@ function visualizeData(data) {
   visualizeExtraRun(data.extraRun);
   visualizeEconomicalBowlers(data.economicalBowler);
   visualizeMatchVenue(data.matchVenue);
+  return;
+}
+function visualizeDataforGivenYear(year,data)
+{
+  //console.log(data.economicalBowlerAllSeason[year]);
+  plotdataforgivenyear(data.economicalBowlerAllSeason[year],year);
   return;
 }
 
@@ -83,7 +115,7 @@ function visualizeWonPerYear(matchesWonPerYear)
     (matchesWonPerYear[year]["Rising Pune Supergiants"])?RisingPuneSupergiants.push(matchesWonPerYear[year]["Rising Pune Supergiants"]):RisingPuneSupergiants.push(0);
     (matchesWonPerYear[year]["Gujarat Lions"])?GujaratLions.push(matchesWonPerYear[year]["Gujarat Lions"]):GujaratLions.push(0);
   }
-  console.log(kolkataKnightRiders);
+  //console.log(kolkataKnightRiders);
   Highcharts.chart('matches-won-per-year', {
     chart: {
         type: 'column'
@@ -215,8 +247,8 @@ function visualizeEconomicalBowlers(economicalBowlers)
       seriesData.push([economicalBowlers[i]["bowler"], economicalBowlers[i]["economy"]]);
       i++;
     }
-    console.log(economicalBowlers[0]["bowler"], economicalBowlers[0]["economy"]);
-    console.log(seriesData);
+    //console.log(economicalBowlers[0]["bowler"], economicalBowlers[0]["economy"]);
+    //console.log(seriesData);
     Highcharts.chart("economical-bowlers", {
         chart: {
           type: "column"
@@ -421,4 +453,44 @@ name: 'Gujarat Lions',
 data: GujaratLions
 }]
 });
+}
+// plot for economical bowlers in given year
+function plotdataforgivenyear(economicalBowlers,year)
+{
+  //console.log(economicalBowlers);
+  const seriesData = [];
+  let i = 0;
+  for (let bowler in economicalBowlers) {
+    seriesData.push([economicalBowlers[i]["bowler"], economicalBowlers[i]["economy"]]);
+    i++;
+  }
+  //console.log(economicalBowlers[0]["bowler"], economicalBowlers[0]["economy"]);
+  //console.log(seriesData);
+  Highcharts.chart("economical-bowlers-given-year", {
+      chart: {
+        type: "column"
+      },
+      title: {
+        text: "Economical Bowler in " + year
+      },
+      subtitle: {
+        text:
+          'Source: <a href="https://www.kaggle.com/nowke9/ipldata/data">IPL Dataset</a>'
+      },
+      xAxis: {
+        type: "category"
+      },
+      yAxis: {
+        min: 0,
+        title: {
+          text: "Economy"
+        }
+      },
+      series: [
+        {
+          name: "bowlers",
+          data: seriesData
+        }
+      ]
+    });
 }

@@ -21,7 +21,7 @@ function extraRuns(matches,deliv)
                 }
             
         }
-        console.log(result);
+        //console.log(result);
         return result;
     
 }
